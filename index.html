@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<!-- SBK Center Parking Hub v3 — รวม 12 ระบบ (v3: จำกัดความกว้างเนื้อหาตามกรอบ + ลวดลายนุ่มสบายตา; v2: การ์ดลวดลาย/เอฟเฟค 3D + โหลดล่วงหน้าเปิดแอปเร็วขึ้น)งานลานจอดรถ ศูนย์การค้า Seacon บางแค -->
+<!-- SBK Center Parking Hub v3 — รวม 12 ระบบ (v4: โลโก้/สีใหม่ ปรับกรอบ 10% การ์ดเล็กลง 30% แก้โหลดล่วงหน้าให้ข้อมูลขึ้น; v3: จำกัดความกว้างเนื้อหาตามกรอบ + ลวดลายนุ่มสบายตา; v2: การ์ดลวดลาย/เอฟเฟค 3D + โหลดล่วงหน้าเปิดแอปเร็วขึ้น)งานลานจอดรถ ศูนย์การค้า Seacon บางแค -->
 <html lang="th">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>SBK Center ลานจอด</title>
-<meta name="theme-color" content="#4f46e5">
+<meta name="theme-color" content="#2563eb">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Center ลานจอด">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<link rel="icon" id="fav" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 128 128'%3E%3Crect width='128' height='128' rx='28' fill='%234f46e5'/%3E%3Cpath fill='%23fff' fill-rule='evenodd' d='M44 30h34a22 22 0 0 1 0 44H60v24H44zM60 44v16h18a8 8 0 0 0 0-16z'/%3E%3C/svg%3E">
+<link rel="icon" id="fav" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 128 128'%3E%3Crect width='128' height='128' rx='28' fill='%232563eb'/%3E%3Cpath fill='%23fff' fill-rule='evenodd' d='M44 30h34a22 22 0 0 1 0 44H60v24H44zM60 44v16h18a8 8 0 0 0 0-16z'/%3E%3C/svg%3E">
 <link rel="apple-touch-icon" id="touch" href="">
 <link rel="manifest" id="mf">
 <link rel="preconnect" href="https://center124-glitch.github.io" crossorigin>
@@ -19,8 +19,8 @@
 <link rel="dns-prefetch" href="https://niran7198-hub.github.io">
 <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#0b1020;--bg2:#141b34;--card:rgba(255,255,255,.07);--bd:rgba(255,255,255,.14);--tx:#f1f5ff;--mut:#a5b0d0;--top:62px}
-:root[data-theme=light]{--bg:#eef2ff;--bg2:#ffffff;--card:rgba(255,255,255,.85);--bd:rgba(79,70,229,.15);--tx:#1e1b4b;--mut:#5b6290}
+:root{--bg:#06142e;--bg2:#141b34;--card:rgba(255,255,255,.07);--bd:rgba(255,255,255,.14);--tx:#f1f5ff;--mut:#a5b0d0;--top:62px}
+:root[data-theme=light]{--bg:#eaf4ff;--bg2:#ffffff;--card:rgba(255,255,255,.85);--bd:rgba(79,70,229,.15);--tx:#1e1b4b;--mut:#5b6290}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 html,body{height:100%;overflow:hidden}
 body{font-family:'Prompt','Sarabun',sans-serif;line-height:1.6;background:var(--bg);color:var(--tx);transition:background .4s,color .4s}
@@ -28,7 +28,7 @@ button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
 /* พื้นหลัง aurora ใช้ร่วมทุกหน้า */
 .aurora{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none}
 .aurora i{position:absolute;width:48vmax;height:48vmax;border-radius:50%;filter:blur(90px);opacity:.45;animation:drift 18s ease-in-out infinite alternate}
-.aurora i:nth-child(1){background:#6366f1;top:-15%;left:-10%}
+.aurora i:nth-child(1){background:#2563eb;top:-15%;left:-10%}
 .aurora i:nth-child(2){background:#06b6d4;bottom:-20%;right:-10%;animation-delay:-6s}
 .aurora i:nth-child(3){background:#ec4899;top:30%;left:40%;animation-delay:-11s;opacity:.3}
 :root[data-theme=light] .aurora i{opacity:.28}
@@ -39,7 +39,7 @@ button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
 #splash{flex-direction:column;align-items:center;justify-content:center;text-align:center;background:radial-gradient(circle at 50% 40%,#1e1b4b,#070a18 70%);color:#fff;z-index:50;padding:20px;transition:opacity .7s,transform .7s,filter .7s}
 #splash.out{opacity:0;transform:scale(1.35);filter:blur(14px)}
 .logoWrap{position:relative;width:min(40vw,170px);aspect-ratio:1;margin-bottom:22px}
-.logoWrap svg{width:100%;height:100%;filter:drop-shadow(0 12px 40px rgba(99,102,241,.8));animation:pop 1s cubic-bezier(.2,1.4,.4,1) both,float 3s 1s ease-in-out infinite}
+.logoWrap svg{width:100%;height:100%;filter:drop-shadow(0 12px 40px rgba(37,99,235,.8));animation:pop 1s cubic-bezier(.2,1.4,.4,1) both,float 3s 1s ease-in-out infinite}
 .ring{position:absolute;inset:-14%;border-radius:50%;border:2px solid transparent;border-top-color:#22d3ee;border-right-color:#ec4899;animation:spin 2.2s linear infinite}
 .ring.b{inset:-26%;animation-duration:3.6s;animation-direction:reverse;border-top-color:#a78bfa;border-right-color:#fbbf24;opacity:.7}
 @keyframes spin{to{transform:rotate(360deg)}}
@@ -57,7 +57,7 @@ button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
 #home{flex-direction:column;padding:max(14px,env(safe-area-inset-top)) 18px 0}
 .top{display:flex;align-items:center;gap:12px;height:var(--top);flex:none}
 .brand{display:flex;align-items:center;gap:10px;min-width:0}
-.brand svg{width:42px;height:42px;flex:none;filter:drop-shadow(0 4px 10px rgba(99,102,241,.5))}
+.brand svg{width:42px;height:42px;flex:none;filter:drop-shadow(0 4px 10px rgba(37,99,235,.5))}
 .brand h1{font-size:clamp(16px,2.6vw,22px);font-weight:700;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .brand small{color:var(--mut);font-size:12px;display:block}
 .sp{flex:1}
@@ -66,7 +66,7 @@ button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
 .clock span{font-size:12px;color:var(--mut)}
 .ib{width:42px;height:42px;border-radius:14px;background:var(--card);border:1px solid var(--bd);font-size:18px;backdrop-filter:blur(8px);transition:.2s}
 .ib:hover{transform:translateY(-2px) rotate(8deg)}
-.welcome{flex:none;margin:6px 0 12px;padding:12px 18px;border-radius:20px;color:#fff;background:linear-gradient(110deg,#4f46e5,#7c3aed,#db2777,#f59e0b);background-size:250%;animation:shine 9s linear infinite;box-shadow:0 10px 30px rgba(79,70,229,.35);display:flex;align-items:center;gap:14px;justify-content:space-between}
+.welcome{flex:none;margin:6px 0 12px;padding:12px 18px;border-radius:20px;color:#fff;background:linear-gradient(110deg,#2563eb,#7c3aed,#f59e0b,#f59e0b);background-size:250%;animation:shine 9s linear infinite;box-shadow:0 10px 30px rgba(79,70,229,.35);display:flex;align-items:center;gap:14px;justify-content:space-between}
 .welcome h2{font-size:clamp(15px,2.4vw,20px);font-weight:600}
 .welcome p{font-size:12px;opacity:.9}
 .pill{background:rgba(255,255,255,.22);border-radius:999px;padding:4px 14px;font-size:13px;white-space:nowrap}
@@ -94,14 +94,14 @@ button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
 .stage iframe.on{display:block}
 .load{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;background:var(--bg);z-index:3;text-align:center;padding:20px}
 .load.hide{display:none}
-.spin{width:46px;height:46px;border-radius:50%;border:4px solid var(--bd);border-top-color:#6366f1;animation:spin 1s linear infinite}
-.load a{padding:8px 20px;border-radius:12px;background:#4f46e5;color:#fff;text-decoration:none;font-size:14px}
+.spin{width:46px;height:46px;border-radius:50%;border:4px solid var(--bd);border-top-color:#2563eb;animation:spin 1s linear infinite}
+.load a{padding:8px 20px;border-radius:12px;background:#2563eb;color:#fff;text-decoration:none;font-size:14px}
 /* ---------- Screensaver ---------- */
 #saver{z-index:90;background:#04060f;align-items:center;justify-content:center;flex-direction:column;color:#fff;overflow:hidden;opacity:0;transition:opacity .8s}
 #saver.on{opacity:1}
 #saver .orb{position:absolute;border-radius:50%;filter:blur(60px);opacity:.5;animation:drift 9s ease-in-out infinite alternate}
 .sv{position:relative;text-align:center;animation:wander 40s ease-in-out infinite alternate}
-.sv svg{width:min(26vw,120px);filter:drop-shadow(0 0 30px #6366f1)}
+.sv svg{width:min(26vw,120px);filter:drop-shadow(0 0 30px #2563eb)}
 .sv .t{font-size:clamp(40px,11vw,110px);font-weight:700;font-variant-numeric:tabular-nums;line-height:1.1;background:linear-gradient(90deg,#67e8f9,#c4b5fd,#f9a8d4,#67e8f9);background-size:300%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shine 6s linear infinite}
 .sv .d{font-size:clamp(14px,3vw,26px);color:#b9c2e8}
 .sv .h{margin-top:14px;font-size:12px;color:#6b749c;animation:blink 2.5s infinite}
@@ -153,7 +153,7 @@ button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
 .top{padding:0 18px}
 .wrap{flex:1;min-height:0;display:flex;flex-direction:column;margin:0 var(--side)}
 /* แก้รอยต่อสีของแบนเนอร์: ไล่สีวนกลับสีแรกเพื่อให้เลื่อนต่อเนื่อง */
-.welcome{background:linear-gradient(110deg,#4f46e5,#7c3aed,#db2777,#f59e0b,#4f46e5);background-size:200% 100%;animation:wshine 16s linear infinite}
+.welcome{background:linear-gradient(110deg,#2563eb,#7c3aed,#f59e0b,#f59e0b,#2563eb);background-size:200% 100%;animation:wshine 16s linear infinite}
 @keyframes wshine{to{background-position:200% 0}}
 /* ลวดลายนุ่มๆ: แสงฟุ้งหนึ่งมุม + จุดละเอียดจางๆ แต่ละการ์ดเปลี่ยนมุมแสง */
 .pat{opacity:1;mix-blend-mode:normal}
@@ -166,6 +166,52 @@ button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
 .card::after{height:40%;background:linear-gradient(rgba(255,255,255,.14),transparent)}
 @media(max-width:1100px){:root{--side:16px}}
 @media(max-width:640px){:root{--side:12px}}
+
+/* ---------- v4: โทนสีใหม่ (น้ำเงินป้ายจอดรถ / ฟ้า / เหลืองสัญญาณ) ---------- */
+:root{--bg:#06142e;--bg2:#0c1f45}
+:root[data-theme=light]{--bg:#eaf4ff;--bg2:#fff;--tx:#0c1f45;--mut:#4a5f8f;--bd:rgba(37,99,235,.18)}
+.aurora i:nth-child(1){background:#2563eb}.aurora i:nth-child(2){background:#06b6d4}.aurora i:nth-child(3){background:#f59e0b;opacity:.2}
+.aurora b{position:absolute;bottom:-20px;border-radius:50%;background:rgba(255,255,255,.35);animation:up linear infinite;opacity:0}
+:root[data-theme=light] .aurora b{background:rgba(37,99,235,.28)}
+@keyframes up{10%{opacity:.7}to{transform:translate(34px,-112vh);opacity:0}}
+#splash{background:radial-gradient(circle at 50% 40%,#0d3b8f,#050d22 70%)}
+.ring{border-top-color:#22d3ee;border-right-color:#fbbf24}.ring.b{border-top-color:#38bdf8;border-right-color:#34d399}
+.logoWrap svg{filter:drop-shadow(0 12px 40px rgba(37,99,235,.9))}
+.sTitle,.sv .t{background-image:linear-gradient(90deg,#67e8f9,#fff,#fde68a,#6ee7b7,#67e8f9);background-size:300%;-webkit-background-clip:text;background-clip:text}
+.bar b{background:linear-gradient(90deg,#22d3ee,#2563eb,#fbbf24)}
+.spin{border-top-color:#38bdf8}
+.welcome{position:relative;overflow:hidden;background:linear-gradient(110deg,#1d4ed8,#0891b2,#059669,#d97706,#1d4ed8);background-size:200% 100%;box-shadow:0 10px 30px rgba(37,99,235,.38)}
+.welcome::after{content:"";position:absolute;top:0;bottom:0;width:28%;left:-40%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.3),transparent);transform:skewX(-20deg);animation:sweep 5s ease-in-out infinite}
+@keyframes sweep{60%,100%{left:130%}}
+.welcome>*{position:relative;z-index:1}
+/* ---------- v4: กรอบเนื้อหาตามเส้นแดง (ขอบข้างละ ~10%) ---------- */
+:root{--side:10vw}
+.wrap{justify-content:center}
+.grid{flex:0 1 auto;min-height:0;grid-template-rows:none;grid-auto-rows:clamp(104px,16.8vh,190px);align-content:center;gap:12px;margin-bottom:0;padding:6px 2px}
+.foot{flex:none;display:flex;justify-content:space-between;gap:10px;margin:8px 4px max(56px,env(safe-area-inset-bottom));font-size:12px;color:var(--mut)}
+/* ---------- v4: การ์ดเล็กลง ~30% ---------- */
+.card{padding:12px 14px;min-height:0;border-radius:20px}
+.card::after{border-radius:20px 20px 0 0}
+.card .ic{width:clamp(38px,4.6vh,46px);font-size:clamp(20px,2.6vh,25px);border-radius:13px}
+.card .tag{font-size:10.5px;padding:0 9px}
+.card h3{font-size:clamp(14px,1.45vw,16px);margin-top:4px}
+.card p{font-size:11.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.card .txt{padding-right:30px;min-width:0}
+.card .wm{font-size:clamp(54px,6.4vw,84px);right:-6px;bottom:-10px}
+.card:hover{box-shadow:0 18px 40px -10px var(--c1),0 0 0 1px rgba(255,255,255,.45)}
+.card .ext{position:absolute;right:9px;bottom:9px;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-size:13px;background:rgba(255,255,255,.22);border:1px solid rgba(255,255,255,.4);z-index:5;opacity:.6;transition:.2s}
+.card .ext:hover{background:#fff;color:#1e3a8a;opacity:1;transform:scale(1.15)}
+.card .go{top:auto;bottom:12px;right:44px;margin:0}
+/* ---------- v4: viewer/stage ---------- */
+#stage{position:fixed;left:0;right:0;bottom:0;top:var(--vb,56px);z-index:3;visibility:hidden}
+body.viewing #stage{visibility:visible}
+#stage iframe{position:absolute;inset:0;width:100%;height:100%;border:0;background:#fff;display:block;visibility:hidden;pointer-events:none}
+body.viewing #stage iframe.on{visibility:visible;pointer-events:auto}
+#stage .load{position:absolute}
+#nodata{position:fixed;right:14px;bottom:max(14px,env(safe-area-inset-bottom));z-index:4;padding:8px 16px;border-radius:99px;background:#f59e0b;color:#1c1400;font-size:13px;font-weight:600;text-decoration:none;box-shadow:0 8px 24px rgba(0,0,0,.35);opacity:0;pointer-events:none;transform:translateY(10px);transition:.3s}
+body.viewing #nodata.on{opacity:1;pointer-events:auto;transform:none}
+@media(max-width:1100px){:root{--side:16px}.wrap{justify-content:flex-start}.foot{margin-bottom:max(24px,env(safe-area-inset-bottom))}}
+@media(max-width:640px){:root{--side:12px}.foot span:last-child{display:none}.card .go{display:none}}
 </style>
 </head>
 <body>
@@ -173,7 +219,7 @@ button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
 
 <!-- โลโก้ (ใช้ซ้ำทุกจุด) -->
 <template id="logo">
-<svg viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="LG__" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4f46e5"/><stop offset=".55" stop-color="#7c3aed"/><stop offset="1" stop-color="#ec4899"/></linearGradient></defs><rect width="128" height="128" rx="30" fill="url(#LG__)"/><circle cx="64" cy="64" r="46" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="3" stroke-dasharray="6 6"/><path fill="#fff" fill-rule="evenodd" d="M45 30h33a22 22 0 0 1 0 44H61v24H45zM61 44v16h17a8 8 0 0 0 0-16z"/><circle cx="98" cy="30" r="8" fill="#22d3ee"/></svg>
+<svg viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="LG__" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#38bdf8"/><stop offset=".55" stop-color="#2563eb"/><stop offset="1" stop-color="#1e3a8a"/></linearGradient></defs><rect width="128" height="128" rx="30" fill="url(#LG__)"/><circle cx="64" cy="52" r="36" fill="rgba(255,255,255,.14)"/><path fill="#fff" fill-rule="evenodd" d="M48 28h28a19 19 0 0 1 0 38H62v18H48zM62 40v14h14a7 7 0 0 0 0-14z"/><path d="M20 118L44 95H84L108 118Z" fill="#0b1b4d" fill-opacity=".6"/><path d="M64 98v6M64 108v8" stroke="#fbbf24" stroke-width="3.5" stroke-linecap="round"/><circle cx="100" cy="28" r="8" fill="#fbbf24"/><circle cx="100" cy="28" r="3" fill="#fff"/></svg>
 </template>
 
 <!-- 1) Splash -->
@@ -197,9 +243,10 @@ button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
   <div class="wrap">
   <div class="welcome">
     <div><h2 id="greet">สวัสดี</h2><p>เลือกระบบที่ต้องการใช้งาน — ทุกระบบเปิดภายในแอปเดียว</p></div>
-    <span class="pill">12 ระบบ</span>
+    <span class="pill" id="pill">12 ระบบ</span>
   </div>
   <div class="grid" id="grid"></div>
+  <div class="foot"><span>แตะการ์ดเพื่อเปิดระบบ · ปุ่ม ↗ เปิดในแท็บใหม่</span><span>SBK Center · Seacon บางแค</span></div>
   </div>
 </section>
 
@@ -211,13 +258,14 @@ button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
     <button class="ib" id="reloadBtn" title="โหลดใหม่">⟳</button>
     <button class="ib" id="extBtn" title="เปิดในแท็บใหม่">↗</button>
   </div>
-  <div class="stage" id="stage"></div>
 </section>
+<div id="stage"></div>
+<a id="nodata" target="_blank" rel="noopener">⚠ ข้อมูลไม่ขึ้น? เปิดในแท็บใหม่ ↗</a>
 
 <!-- 4) Screensaver -->
 <section id="saver" class="screen">
-  <div class="orb" style="width:50vmax;height:50vmax;background:#4f46e5;top:-20%;left:-15%"></div>
-  <div class="orb" style="width:40vmax;height:40vmax;background:#db2777;bottom:-20%;right:-10%;animation-delay:-4s"></div>
+  <div class="orb" style="width:50vmax;height:50vmax;background:#2563eb;top:-20%;left:-15%"></div>
+  <div class="orb" style="width:40vmax;height:40vmax;background:#f59e0b;bottom:-20%;right:-10%;animation-delay:-4s"></div>
   <div class="orb" style="width:30vmax;height:30vmax;background:#06b6d4;top:40%;left:50%;animation-delay:-7s"></div>
   <div class="sv"><span data-logo></span><div class="t" id="svT">--</div><div class="d" id="svD">--</div><div class="h">แตะหน้าจอหรือเลื่อนเมาส์เพื่อกลับสู่ระบบ</div></div>
 </section>
@@ -253,12 +301,12 @@ function buildIcons(){
   const img = new Image();
   img.onload = () => {
     const mk = (sz, pad) => { const c = document.createElement('canvas'); c.width = c.height = sz;
-      const x = c.getContext('2d'); x.fillStyle = '#4f46e5'; x.fillRect(0,0,sz,sz); x.drawImage(img, pad, pad, sz-pad*2, sz-pad*2); return c.toDataURL('image/png'); };
+      const x = c.getContext('2d'); x.fillStyle = '#2563eb'; x.fillRect(0,0,sz,sz); x.drawImage(img, pad, pad, sz-pad*2, sz-pad*2); return c.toDataURL('image/png'); };
     try {
       const i180 = mk(180, 0), i192 = mk(192, 0), i512 = mk(512, 0);
       $('#touch').href = i180;
       const man = { name:'SBK Center ลานจอด', short_name:'Center ลานจอด', display:'standalone', start_url: location.href.split('#')[0],
-        background_color:'#0b1020', theme_color:'#4f46e5', icons:[{src:i192,sizes:'192x192',type:'image/png'},{src:i512,sizes:'512x512',type:'image/png'}] };
+        background_color:'#06142e', theme_color:'#2563eb', icons:[{src:i192,sizes:'192x192',type:'image/png'},{src:i512,sizes:'512x512',type:'image/png'}] };
       $('#mf').href = URL.createObjectURL(new Blob([JSON.stringify(man)], {type:'application/manifest+json'}));
     } catch(e) { console.warn('สร้างไอคอนไม่สำเร็จ', e); }
   };
@@ -280,17 +328,21 @@ function tick(){
 }
 
 /* ============ หน้าจอ ============ */
-function show(id){ document.querySelectorAll('.screen').forEach(s => s.classList.toggle('on', s.id === id)); if(id==='home'||id==='viewer') lastScreen = id; }
+function show(id){ document.querySelectorAll('.screen').forEach(s => s.classList.toggle('on', s.id === id)); if(id==='home'||id==='viewer') lastScreen = id; document.body.classList.toggle('viewing', id==='viewer'); if(id==='viewer') setVb(); }
+function setVb(){ const b = document.querySelector('.vbar'); if(b && b.offsetHeight) document.documentElement.style.setProperty('--vb', b.offsetHeight+'px'); }
+let hintT, hintT2;
+function showHint(a){ clearTimeout(hintT); clearTimeout(hintT2); const h = $('#nodata'); h.classList.remove('on'); h.href = a.u; hintT = setTimeout(() => { h.classList.add('on'); hintT2 = setTimeout(() => h.classList.remove('on'), 12000); }, 10000); }
+function updateReady(){ const n = document.querySelectorAll('.card.ready').length; $('#pill').textContent = n ? `พร้อมใช้งาน ${n}/${APPS.length}` : `${APPS.length} ระบบ`; }
 function renderGrid(){
-  $('#grid').innerHTML = APPS.map((a,k) => `<button class="card p${k%4}" style="--g:linear-gradient(135deg,${a.g.split(',')[0]},${a.g.split(',')[1]});animation-delay:${k*55}ms" data-id="${a.id}">
+  $('#grid').innerHTML = APPS.map((a,k) => `<button class="card p${k%4}" style="--c1:${a.g.split(',')[0]};--g:linear-gradient(135deg,${a.g.split(',')[0]},${a.g.split(',')[1]});animation-delay:${k*55}ms" data-id="${a.id}">
     <span class="pat"></span><span class="glow"></span><span class="wm">${a.i}</span><span class="dot" title="สถานะโหลดล่วงหน้า"></span>
     <div class="row"><span class="ic">${a.i}</span><span class="tag">${a.t}</span></div>
-    <div><h3>${a.n}</h3><p>${a.d}</p></div><span class="go">เปิดระบบ →</span></button>`).join('');
+    <div class="txt"><h3>${a.n}</h3><p>${a.d}</p></div><span class="go">เปิดระบบ →</span><span class="ext" data-ext="${a.id}" title="เปิดในแท็บใหม่">↗</span></button>`).join('');
   $('#tabs').innerHTML = APPS.map(a => `<button class="tab" style="--g:linear-gradient(135deg,${a.g.split(',')[0]},${a.g.split(',')[1]})" data-id="${a.id}">${a.i} ${a.n}</button>`).join('');
 }
 function openApp(id){
   const a = APPS.find(x => x.id === id); if(!a) return;
-  cur = a; show('viewer');
+  cur = a; show('viewer'); showHint(a);
   document.querySelectorAll('.tab').forEach(t => t.classList.toggle('act', t.dataset.id === id));
   document.querySelector('.tab.act')?.scrollIntoView({inline:'center',block:'nearest'});
   document.querySelectorAll('#stage iframe').forEach(f => f.classList.toggle('on', f.dataset.id === id));
@@ -303,10 +355,10 @@ function mount(a, vis = true){
   ld.innerHTML = `<div class="spin"></div><div>กำลังเปิด ${a.n}…</div><div id="slow-${a.id}" style="display:none;font-size:13px;color:var(--mut)">หากใช้เวลานาน กรุณาตรวจสอบอินเทอร์เน็ต หรือ<br><a href="${a.u}" target="_blank" rel="noopener">เปิดในแท็บใหม่</a></div>`;
   fr.dataset.id = a.id; fr.className = vis ? 'on' : ''; fr.allow = 'camera;microphone;geolocation;clipboard-write;fullscreen'; fr.src = a.u;
   const slow = setTimeout(() => { const s = $('#slow-'+a.id); if(s) s.style.display = 'block'; }, 9000);
-  fr.onload = () => { clearTimeout(slow); ld.dataset.done = '1'; ld.classList.add('hide'); document.querySelector(`.card[data-id="${a.id}"]`)?.classList.add('ready'); nextPre(); };
+  fr.onload = () => { clearTimeout(slow); ld.dataset.done = '1'; ld.classList.add('hide'); document.querySelector(`.card[data-id="${a.id}"]`)?.classList.add('ready'); updateReady(); nextPre(); };
   st.append(ld, fr);
 }
-function goHome(){ show('home'); cur = null; }
+function goHome(){ show('home'); cur = null; clearTimeout(hintT); clearTimeout(hintT2); $('#nodata').classList.remove('on'); }
 
 
 /* ============ โหลดล่วงหน้า (ทำให้กดแล้วขึ้นทันที) ============ */
@@ -341,7 +393,7 @@ let entered = false;
 function enter(){ if(entered) return; entered = true; $('#splash').classList.add('out'); setTimeout(() => { show('home'); $('#splash').style.display = 'none'; resetIdle(); setTimeout(startPreload, 600); }, 650); }
 
 /* ============ ธีม ============ */
-function setTheme(t){ document.documentElement.dataset.theme = t; $('#themeBtn').textContent = t==='dark' ? '🌙' : '☀️'; $('meta[name=theme-color]').content = t==='dark' ? '#0b1020' : '#eef2ff'; try{ localStorage.setItem('sbkc-theme', t); }catch(e){} }
+function setTheme(t){ document.documentElement.dataset.theme = t; $('#themeBtn').textContent = t==='dark' ? '🌙' : '☀️'; $('meta[name=theme-color]').content = t==='dark' ? '#06142e' : '#eaf4ff'; try{ localStorage.setItem('sbkc-theme', t); }catch(e){} }
 
 /* ============ เริ่มระบบ ============ */
 (function init(){
@@ -351,7 +403,10 @@ function setTheme(t){ document.documentElement.dataset.theme = t; $('#themeBtn')
   // เอฟเฟกต์เอียง 3D ตามเมาส์ (เฉพาะอุปกรณ์ที่มีเมาส์)
   $('#grid').addEventListener('pointermove', e => { if(e.pointerType !== 'mouse') return; const c = e.target.closest('.card'); if(!c) return; const r = c.getBoundingClientRect(), x = (e.clientX-r.left)/r.width, y = (e.clientY-r.top)/r.height; c.style.setProperty('--ry', ((x-.5)*10)+'deg'); c.style.setProperty('--rx', ((.5-y)*10)+'deg'); c.style.setProperty('--mx', x*100+'%'); c.style.setProperty('--my', y*100+'%'); });
   $('#grid').addEventListener('pointerout', e => { const c = e.target.closest('.card'); if(c && !c.contains(e.relatedTarget)){ c.style.setProperty('--rx','0deg'); c.style.setProperty('--ry','0deg'); } });
-  $('#grid').addEventListener('click', e => { const c = e.target.closest('.card'); if(c) openApp(c.dataset.id); });
+  $('#grid').addEventListener('click', e => { const x = e.target.closest('.ext'); if(x){ e.stopPropagation(); const a = APPS.find(z => z.id === x.dataset.ext); if(a) window.open(a.u, '_blank', 'noopener'); return; } const c = e.target.closest('.card'); if(c) openApp(c.dataset.id); });
+  addEventListener('resize', setVb);
+  // ฟองลอยพื้นหลัง
+  const au = $('.aurora'); for(let k = 0; k < 20; k++){ const b = document.createElement('b'), z = 4 + Math.random()*9; b.style.cssText = `left:${Math.random()*100}%;width:${z}px;height:${z}px;animation-duration:${14+Math.random()*16}s;animation-delay:${-Math.random()*24}s`; au.appendChild(b); }
   $('#tabs').addEventListener('click', e => { const c = e.target.closest('.tab'); if(c) openApp(c.dataset.id); });
   $('#homeBtn').onclick = goHome;
   $('#themeBtn').onclick = () => setTheme(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark');
