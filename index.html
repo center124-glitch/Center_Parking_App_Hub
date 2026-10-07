@@ -2,8 +2,10 @@
 <html lang="th">
 <head>
 <meta charset="UTF-8">
-<!-- SBK Parking Center Hub v2 (โลโก้ C หลากสี + อนิเมชันแดชบอร์ด) : แอปรวมระบบงานลานจอด (Single-file Web App) -->
+<!-- SBK Parking Center Hub v3 (Responsive + โหมดมืด/สว่าง) : แอปรวมระบบงานลานจอด (Single-file Web App) -->
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark light">
+<meta name="format-detection" content="telephone=no">
 <title>SBK Parking Center</title>
 <meta name="theme-color" content="#4f46e5">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -16,6 +18,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700;800&family=Sarabun:wght@400;500;600&display=swap" rel="stylesheet">
+<script>
+/* กำหนดธีมก่อนแสดงผล: ใช้ค่าที่ผู้ใช้เลือกไว้ ถ้าไม่มีให้ตามโหมดของเครื่อง */
+(function(){var t='dark';try{t=localStorage.getItem('sbk_theme')||(matchMedia('(prefers-color-scheme: light)').matches?'light':'dark');}catch(e){}document.documentElement.setAttribute('data-theme',t);})();
+</script>
 <style>
 :root{--bg:#0b1020;--card:#ffffff14;--txt:#f1f5f9;--mut:#a5b0c8;--safe-t:env(safe-area-inset-top,0px);--safe-b:env(safe-area-inset-bottom,0px)}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
@@ -138,12 +144,91 @@ button{font-family:inherit;cursor:pointer;border:0}
 @keyframes rip{to{transform:scale(22);opacity:0}}
 @media(prefers-reduced-motion:reduce){*,*::before{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
 @media(max-width:560px){.kpi{margin-left:0}.top h1{font-size:15px}.hero h2{font-size:17px}}
+
+/* ===== v3: โหมดสว่าง (ค่าเริ่มต้นของ :root คือโหมดมืด) ===== */
+:root{color-scheme:dark}
+html[data-theme=light]{color-scheme:light;--bg:#f1f5f9;--txt:#0f172a;--mut:#475569}
+html[data-theme=light] #splash{background:linear-gradient(135deg,#06b6d4,#6366f1,#d946ef,#f97316);background-size:300% 300%}
+html[data-theme=light] .orb{opacity:.45}
+html[data-theme=light] .timeTxt{background:linear-gradient(90deg,#fff,#fef9c3,#fff,#fef9c3);background-size:250% 100%;-webkit-background-clip:text;background-clip:text;filter:drop-shadow(0 4px 12px #1e1b4b77)}
+html[data-theme=light] #home{background:radial-gradient(circle at 15% 0,#c7d2fe 0,transparent 45%),radial-gradient(circle at 90% 10%,#fbcfe8 0,transparent 40%),#f1f5f9}
+html[data-theme=light] .top{background:linear-gradient(90deg,#4f46e5,#9333ea,#db2777);border-bottom:0;box-shadow:0 6px 20px #4f46e544;color:#fff}
+html[data-theme=light] .top small,html[data-theme=light] .clk{color:#ffffffd0}
+html[data-theme=light] .tools input{background:#fff;border-color:#cbd5e1;color:#0f172a;box-shadow:0 2px 8px #0f172a14}
+html[data-theme=light] .tools input:focus{border-color:#6366f1}
+html[data-theme=light] .tools input::placeholder{color:#64748b}
+html[data-theme=light] .chip{background:#fff;color:#334155;box-shadow:0 1px 5px #0f172a22}
+html[data-theme=light] .chip.on{background:linear-gradient(135deg,#06b6d4,#6366f1);color:#fff}
+html[data-theme=light] .card{box-shadow:0 10px 24px #4338ca33}
+html[data-theme=light] .hbg b{opacity:.22}
+html[data-theme=light] .load{color:#0f172a}
+html[data-theme=light] .spin{border-color:#0f172a22;border-top-color:#6366f1}
+html[data-theme=light] .mbox{background:linear-gradient(135deg,#fff,#ede9fe);color:#1e1b4b;border-color:#c4b5fd;box-shadow:0 20px 50px #4c1d9555}
+html[data-theme=light] .mbox .n{color:#c026d3}
+.mm{color:#cbd5e1;font-size:14px}html[data-theme=light] .mm{color:#475569}
+#viewer{background:var(--bg)}
+html[data-theme=light] .top .lg{box-shadow:0 0 0 2px #ffffffd9,0 4px 14px #1e1b4b55}
+.tgl{width:42px;height:42px;flex:none;border-radius:50%;background:#ffffff26;color:#fff;font-size:20px;display:grid;place-items:center;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);box-shadow:0 2px 10px #0003}
+.tgl.rot{animation:tglspin .6s ease}
+@keyframes tglspin{from{transform:rotate(-180deg) scale(.4)}to{transform:none}}
+.tglS{position:absolute;z-index:3;top:calc(14px + var(--safe-t));right:calc(14px + env(safe-area-inset-right,0px))}
+
+/* ===== v3: Responsive (มือถือ / แท็บเล็ต / แล็ปท็อป / เดสก์ท็อป · Android + iOS) ===== */
+html,body{-webkit-text-size-adjust:100%;text-size-adjust:100%;overscroll-behavior:none;touch-action:manipulation}
+.top,.ic{-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px)}
+.top{padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right))}
+.wrap{max-width:1480px;padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right))}
+.vbar{padding-left:max(10px,env(safe-area-inset-left));padding-right:max(10px,env(safe-area-inset-right))}
+#frame{left:env(safe-area-inset-left,0px);right:env(safe-area-inset-right,0px);width:auto}
+#home{-webkit-overflow-scrolling:touch}
+.tools input{font-size:16px;min-height:44px} /* 16px กัน iOS ซูมหน้าจอเองตอนพิมพ์ */
+.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.card{min-width:0}
+/* มือถือ */
+@media(max-width:639px){
+  .card{min-height:136px;padding:14px;border-radius:20px}
+  .ic{width:46px;height:46px;font-size:26px;border-radius:14px}
+  .card h3{font-size:14.5px}
+  .card p{font-size:12px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .tag{font-size:10.5px}
+  .hero{padding:16px;gap:10px}.kpi{margin-left:0;width:100%}.kpi div{flex:1}
+  #chips{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;padding-bottom:4px}
+  #chips::-webkit-scrollbar{display:none}.chip{flex:none;white-space:nowrap}
+  .top{gap:8px}.top h1{white-space:nowrap}.top small{display:none}
+}
+@media(max-width:479px){.bt,.vl{display:none}.clk span{display:none}.btn{padding:8px 10px}}
+@media(max-width:339px){.grid{grid-template-columns:1fr}}
+/* แท็บเล็ตแนวตั้ง */
+@media(min-width:640px){.grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}.wrap{padding-top:22px}}
+/* แท็บเล็ตแนวนอน / แล็ปท็อป */
+@media(min-width:1024px){
+  .grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}
+  .top{padding-top:calc(16px + var(--safe-t));padding-bottom:16px;gap:16px}
+  .top .lg{width:52px;height:52px}.top h1{font-size:22px}.clk{font-size:14px}.clk b{font-size:24px}
+  .hero{padding:28px 32px}.hero h2{font-size:30px}.hero p{font-size:16px}
+  .kpi div{padding:10px 24px;font-size:14px}.kpi b{font-size:30px}
+  .card{min-height:178px;padding:22px}.card h3{font-size:18px}.card p{font-size:14px}
+  .ic{width:62px;height:62px;font-size:38px}
+  .logoWrap{width:220px}
+}
+/* จอใหญ่ / เดสก์ท็อป */
+@media(min-width:1500px){.grid{grid-template-columns:repeat(5,minmax(0,1fr));gap:22px}.wrap{max-width:1720px}}
+/* มือถือแนวนอน / จอเตี้ย: ย่อหน้าโลโก้ให้พอดีจอ */
+@media(max-height:520px){
+  .center{padding:12px}.logoWrap{width:min(24vh,110px);margin-bottom:6px}
+  .brand{font-size:clamp(20px,5vh,30px)}.sub{margin:0 0 4px;font-size:13px}
+  .dateTxt{font-size:15px}.timeTxt{font-size:clamp(32px,14vh,64px);line-height:1.1}.bar{margin-top:10px}.hint{margin-top:6px}
+}
+/* จอสัมผัส: ปุ่มใหญ่พอแตะ และปิดเอฟเฟคค้างจากการ hover */
+@media(pointer:coarse){.btn,.vb,.chip{min-height:44px}.vb{min-width:44px}}
+@media(hover:none){.card:hover{transform:none;box-shadow:0 10px 24px #0006}.card:hover::before{left:-80%}}
 </style>
 </head>
 <body>
 
 <!-- ===== หน้า Splash: โลโก้ + วัน/เวลา ===== -->
 <section id="splash" class="screen on">
+  <button class="tgl tglS" id="tglS" aria-label="สลับโหมดมืด/สว่าง"><span class="ti"></span></button>
   <div class="orb o1"></div><div class="orb o2"></div><div class="orb o3"></div>
   <div id="sparks"></div>
   <div class="center">
@@ -164,7 +249,8 @@ button{font-family:inherit;cursor:pointer;border:0}
     <div class="lg" id="topLogo"></div>
     <div><h1>SBK Parking Center</h1><small>ศูนย์รวมระบบงานลานจอด</small></div>
     <div class="sp"></div>
-    <button class="btn" id="installBtn">📲 ติดตั้งแอป</button>
+    <button class="tgl" id="tglT" aria-label="สลับโหมดมืด/สว่าง"><span class="ti"></span></button>
+    <button class="btn" id="installBtn">📲<span class="bt"> ติดตั้งแอป</span></button>
     <div class="clk"><b id="hTime">--:--</b><span id="hDate">-</span></div>
   </header>
   <div class="wrap">
@@ -184,7 +270,7 @@ button{font-family:inherit;cursor:pointer;border:0}
 <!-- ===== Viewer: เปิดแอปภายในหน้าเดียว ===== -->
 <section id="viewer" class="screen">
   <div class="vbar">
-    <button class="vb" id="vBack">← หน้าหลัก</button>
+    <button class="vb" id="vBack">←<span class="vl"> หน้าหลัก</span></button>
     <div class="vt" id="vTitle">-</div>
     <button class="vb" id="vReload" title="โหลดใหม่">⟳</button>
     <button class="vb" id="vOpen" title="เปิดในแท็บใหม่">↗</button>
@@ -193,7 +279,7 @@ button{font-family:inherit;cursor:pointer;border:0}
   <iframe id="frame" title="app" allow="camera; microphone; geolocation; clipboard-write; fullscreen"></iframe>
 </section>
 
-<div id="idleModal"><div class="mbox"><div style="font-size:18px;font-weight:700">ไม่มีการใช้งานสักครู่ 💤</div><div style="color:#cbd5e1;font-size:14px">ระบบจะกลับหน้าโลโก้ใน</div><div class="n" id="idleN">30</div><button class="btn" id="idleStay">ใช้งานต่อ</button></div></div>
+<div id="idleModal"><div class="mbox"><div style="font-size:18px;font-weight:700">ไม่มีการใช้งานสักครู่ 💤</div><div class="mm">ระบบจะกลับหน้าโลโก้ใน</div><div class="n" id="idleN">30</div><button class="btn" id="idleStay">ใช้งานต่อ</button></div></div>
 <div id="toast"></div>
 
 <script>
@@ -220,8 +306,9 @@ const APPS = [
 
 /* ============ 1) โลโก้ (SVG) ============ */
 // full=true ใช้สร้างไอคอนติดหน้าจอ (เต็มกรอบ ขอบไม่โค้ง) / false ใช้แสดงในหน้าเว็บ (มุมโค้ง)
+let logoSeq=0; // รหัส gradient ต้องไม่ซ้ำกันในแต่ละโลโก้ ไม่งั้นโลโก้ที่อยู่ใน display:none ทำให้สีของอีกอันหาย
 function logoSVG(full){
-  const r = full ? 0 : 26, v = full ? 1 : 0, s = full ? 'transform="translate(15 15) scale(.7)"' : '';
+  const r = full ? 0 : 26, v = (full ? 'f' : 'n') + (logoSeq++), s = full ? 'transform="translate(15 15) scale(.7)"' : '';
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs>
   <linearGradient id="bg${v}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#06b6d4"/><stop offset=".35" stop-color="#6366f1"/><stop offset=".7" stop-color="#d946ef"/><stop offset="1" stop-color="#f97316"/></linearGradient>
   <linearGradient id="cc${v}" gradientUnits="userSpaceOnUse" x1="20" y1="20" x2="80" y2="80"><stop offset="0" stop-color="#ffffff"/><stop offset=".6" stop-color="#fef9c3"/><stop offset="1" stop-color="#fde047"/></linearGradient>
@@ -253,6 +340,29 @@ function tick(){
 }
 tick(); setInterval(tick,1000);
 const $ = id => document.getElementById(id);
+
+/* ============ 2.5) โหมดมืด / สว่าง ============ */
+const THEME_KEY='sbk_theme';
+function applyTheme(t){
+  document.documentElement.setAttribute('data-theme',t);
+  document.querySelector('meta[name=theme-color]').content = t==='dark' ? '#0b1020' : '#4f46e5'; // สีแถบสถานะบน Android
+  document.querySelectorAll('.tgl .ti').forEach(i=>{ i.textContent = t==='dark' ? '☀️' : '🌙'; }); // แสดงไอคอนของโหมดที่จะสลับไป
+  document.querySelectorAll('.tgl').forEach(b=>b.title = t==='dark' ? 'เปลี่ยนเป็นโหมดสว่าง' : 'เปลี่ยนเป็นโหมดมืด');
+}
+function toggleTheme(){
+  const t = document.documentElement.getAttribute('data-theme')==='dark' ? 'light' : 'dark';
+  applyTheme(t);
+  try{ localStorage.setItem(THEME_KEY,t); }catch(e){ /* โหมดส่วนตัวอาจบันทึกไม่ได้ ไม่เป็นไร */ }
+  document.querySelectorAll('.tgl').forEach(b=>{ b.classList.remove('rot'); void b.offsetWidth; b.classList.add('rot'); });
+  toast(t==='dark' ? '🌙 เปลี่ยนเป็นโหมดมืดแล้ว' : '☀️ เปลี่ยนเป็นโหมดสว่างแล้ว');
+}
+$('tglT').onclick=toggleTheme; $('tglS').onclick=toggleTheme;
+$('tglS').addEventListener('pointerdown',e=>e.stopPropagation()); // กันแตะปุ่มแล้วเข้าหน้าหลักโดยไม่ตั้งใจ
+applyTheme(document.documentElement.getAttribute('data-theme')||'dark');
+// ถ้าผู้ใช้ยังไม่เคยเลือกเอง ให้เปลี่ยนตามโหมดของเครื่องแบบสด
+(function(){ const mq=matchMedia('(prefers-color-scheme: dark)');
+  const fn=e=>{ let saved=null; try{saved=localStorage.getItem(THEME_KEY);}catch(x){} if(!saved) applyTheme(e.matches?'dark':'light'); };
+  mq.addEventListener ? mq.addEventListener('change',fn) : mq.addListener(fn); })();
 
 /* ============ 3) จัดการหน้าจอ ============ */
 let state='splash', splashTimer=null;
