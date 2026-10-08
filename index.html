@@ -2,7 +2,7 @@
 <html lang="th">
 <head>
 <meta charset="UTF-8">
-<!-- SBK Parking Center Hub v4 (แก้ Viewer จอคอมกว้างเต็มจอ + Responsive + โหมดมืด/สว่าง) : แอปรวมระบบงานลานจอด (Single-file Web App) -->
+<!-- SBK Parking Center Hub v5 (เปิดแอปเร็วขึ้นด้วย iframe pool + พื้นหลังแดชบอร์ดอนิเมชัน + Viewer เต็มจอ + Responsive + โหมดมืด/สว่าง) : แอปรวมระบบงานลานจอด (Single-file Web App) -->
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="dark light">
 <meta name="format-detection" content="telephone=no">
@@ -15,6 +15,10 @@
 <link rel="icon" id="favicon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%2306b6d4'/%3E%3Cstop offset='.35' stop-color='%236366f1'/%3E%3Cstop offset='.7' stop-color='%23d946ef'/%3E%3Cstop offset='1' stop-color='%23f97316'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100' height='100' rx='24' fill='url(%23g)'/%3E%3Cpath d='M68 32A26 26 0 1 0 68 68' fill='none' stroke='white' stroke-width='14' stroke-linecap='round'/%3E%3Ccircle cx='68' cy='32' r='5' fill='%2322d3ee'/%3E%3Ccircle cx='68' cy='68' r='5' fill='%23f472b6'/%3E%3C/svg%3E">
 <link rel="apple-touch-icon" id="touchIcon" href="">
 <link rel="manifest" id="manifestLink" href="">
+<link rel="preconnect" href="https://center124-glitch.github.io">
+<link rel="preconnect" href="https://niran7198-hub.github.io">
+<link rel="dns-prefetch" href="https://center124-glitch.github.io">
+<link rel="dns-prefetch" href="https://niran7198-hub.github.io">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700;800&family=Sarabun:wght@400;500;600&display=swap" rel="stylesheet">
@@ -93,9 +97,7 @@ button{font-family:inherit;cursor:pointer;border:0}
 .vbar{height:calc(52px + var(--safe-t));padding:var(--safe-t) 10px 0;display:flex;align-items:center;gap:8px;background:linear-gradient(90deg,#312e81,#6d28d9,#be185d);color:#fff}
 .vbar .vt{flex:1;font-weight:600;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .vb{background:#ffffff26;color:#fff;border-radius:11px;padding:8px 12px;font-size:14px;font-weight:600}
-#frame{position:absolute;left:0;right:0;top:calc(52px + var(--safe-t));bottom:0;width:100%;height:calc(100% - 52px - var(--safe-t));border:0;background:#fff}
 .load{position:absolute;inset:calc(52px + var(--safe-t)) 0 0;display:grid;place-items:center;background:#0b1020;color:#fff;text-align:center;z-index:2}
-.load.off{display:none}
 .spin{width:46px;height:46px;border-radius:50%;border:5px solid #ffffff30;border-top-color:#22d3ee;animation:spin .9s linear infinite;margin:0 auto 12px}
 
 /* ===== Modal / Toast ===== */
@@ -179,10 +181,20 @@ html,body{-webkit-text-size-adjust:100%;text-size-adjust:100%;overscroll-behavio
 .top{padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right))}
 .wrap{max-width:1480px;padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right))}
 .vbar{padding-left:max(10px,env(safe-area-inset-left));padding-right:max(10px,env(safe-area-inset-right))}
-/* v4: แก้จอคอมแสดงแอปเป็นแถบแคบ ~300px — iframe เป็น replaced element ถ้า width:auto จะไม่ยืดตาม left/right แต่ใช้ความกว้างมาตรฐาน 300px
-   จึงต้องกำหนดความกว้างจริงเสมอ (มือถือกว้าง ~300-400px เลยดูเหมือนปกติ แต่จอคอมจะเหลือพื้นที่ว่างสีเข้มด้านขวา) */
-#frame{display:block;left:env(safe-area-inset-left,0px);right:env(safe-area-inset-right,0px);width:calc(100% - env(safe-area-inset-left,0px) - env(safe-area-inset-right,0px));max-width:none}
-.load{left:env(safe-area-inset-left,0px);right:env(safe-area-inset-right,0px)}
+/* v5: คอนเทนเนอร์ iframe (อยู่นอก #viewer เพื่อให้ iframe ที่โหลดล่วงหน้ามีขนาดจริง ชาร์ตในแอปจะได้ไม่คำนวณขนาดเป็น 0)
+   ความกว้างต้องกำหนดชัดเจนเสมอ เพราะ iframe ที่ width:auto จะกว้างแค่ ~300px */
+#frames{position:fixed;z-index:21;left:env(safe-area-inset-left,0px);right:env(safe-area-inset-right,0px);top:calc(52px + var(--safe-t));bottom:0;pointer-events:none}
+.appf{position:absolute;left:0;top:0;width:100%;height:100%;max-width:none;display:block;border:0;background:#fff;visibility:hidden;pointer-events:none}
+body.vw .appf.cur.ready{visibility:visible;pointer-events:auto;animation:fin .25s ease both}
+@keyframes fin{from{opacity:0}}
+.load{left:env(safe-area-inset-left,0px);right:env(safe-area-inset-right,0px);background:var(--bg);transition:opacity .25s,visibility .25s}
+.load.off{display:grid;opacity:0;visibility:hidden;pointer-events:none}
+.lic{font-size:56px;line-height:1.3;animation:ico 2s ease-in-out infinite}
+.lname{font-weight:700;font-size:18px;margin:2px 0 14px}
+.lbar{width:min(60vw,260px);height:5px;border-radius:9px;background:#ffffff26;overflow:hidden;margin:0 auto 12px}
+.lbar i{display:block;height:100%;width:40%;border-radius:9px;background:linear-gradient(90deg,#22d3ee,#ec4899,#f59e0b);animation:ind 1.1s ease-in-out infinite}
+@keyframes ind{from{transform:translateX(-120%)}to{transform:translateX(280%)}}
+html[data-theme=light] .lbar{background:#0f172a1f}
 #home{-webkit-overflow-scrolling:touch}
 .tools input{font-size:16px;min-height:44px} /* 16px กัน iOS ซูมหน้าจอเองตอนพิมพ์ */
 .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
@@ -225,6 +237,20 @@ html,body{-webkit-text-size-adjust:100%;text-size-adjust:100%;overscroll-behavio
 /* จอสัมผัส: ปุ่มใหญ่พอแตะ และปิดเอฟเฟคค้างจากการ hover */
 @media(pointer:coarse){.btn,.vb,.chip{min-height:44px}.vb{min-width:44px}}
 @media(hover:none){.card:hover{transform:none;box-shadow:0 10px 24px #0006}.card:hover::before{left:-80%}}
+
+/* ===== v5: พื้นหลังหน้าแดชบอร์ด (ออโรร่า + เครือข่ายอนุภาคตอบสนองเมาส์ + รถวิ่งบนถนนจางๆ) ===== */
+.hbg .aur{position:absolute;inset:-35%;background:conic-gradient(from 0deg at 50% 50%,#06b6d455,#6366f155,#d946ef55,#f9731644,#10b98144,#06b6d455);filter:blur(90px);opacity:.55;animation:spin 46s linear infinite;pointer-events:none}
+.hbg canvas{position:absolute;inset:0;width:100%;height:100%}
+.hbg .road{position:absolute;left:0;right:0;bottom:calc(10px + var(--safe-b));height:48px;opacity:.55;overflow:hidden;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent)}
+.hbg .lane{position:absolute;left:0;right:0;bottom:6px;height:3px;border-radius:2px;background:repeating-linear-gradient(90deg,#ffffff66 0 26px,transparent 26px 52px);animation:lane 2.2s linear infinite}
+@keyframes lane{to{background-position:-52px 0}}
+.hbg .vcar{position:absolute;bottom:10px;left:100%;font-size:26px;line-height:1;white-space:nowrap;animation:drive var(--d,28s) linear infinite;animation-delay:var(--dl,0s);filter:drop-shadow(0 4px 6px #0007)}
+@keyframes drive{from{transform:translateX(0)}to{transform:translateX(calc(-100vw - 140px))}}
+html[data-theme=light] .hbg .aur{opacity:.4}
+html[data-theme=light] .hbg .lane{background:repeating-linear-gradient(90deg,#4f46e577 0 26px,transparent 26px 52px)}
+html[data-theme=light] .hbg .road{opacity:.7}
+@media(max-width:639px){.hbg .vcar{font-size:21px}.hbg .road{height:38px}}
 </style>
 </head>
 <body>
@@ -247,7 +273,7 @@ html,body{-webkit-text-size-adjust:100%;text-size-adjust:100%;overscroll-behavio
 
 <!-- ===== หน้าหลัก: รวมแอป ===== -->
 <section id="home" class="screen">
-  <div class="hbg"><b></b><b></b><b></b></div>
+  <div class="hbg"><b></b><b></b><b></b><i class="aur"></i><canvas id="bgc"></canvas><div class="road"><i class="lane"></i><span class="vcar" style="--d:30s;--dl:-6s">🚗</span><span class="vcar" style="--d:38s;--dl:-21s">🚙</span><span class="vcar" style="--d:26s;--dl:-13s">🚕</span><span class="vcar" style="--d:44s;--dl:-33s">🚌</span></div></div>
   <header class="top">
     <div class="lg" id="topLogo"></div>
     <div><h1>SBK Parking Center</h1><small>ศูนย์รวมระบบงานลานจอด</small></div>
@@ -278,9 +304,11 @@ html,body{-webkit-text-size-adjust:100%;text-size-adjust:100%;overscroll-behavio
     <button class="vb" id="vReload" title="โหลดใหม่">⟳</button>
     <button class="vb" id="vOpen" title="เปิดในแท็บใหม่">↗</button>
   </div>
-  <div class="load" id="vLoad"><div><div class="spin"></div><div id="vLoadTxt">กำลังโหลดระบบ...</div><button class="vb" id="vLoadOpen" style="margin-top:14px;background:#6366f1">หากไม่แสดง เปิดในแท็บใหม่ ↗</button></div></div>
-  <iframe id="frame" title="app" allow="camera; microphone; geolocation; clipboard-write; fullscreen"></iframe>
+  <div class="load" id="vLoad"><div><div class="lic" id="vLoadIc">⏳</div><div class="lname" id="vLoadName">-</div><div class="lbar"><i></i></div><div id="vLoadTxt">กำลังโหลดระบบ...</div><button class="vb" id="vLoadOpen" style="margin-top:14px;background:#6366f1;color:#fff">หากไม่แสดง เปิดในแท็บใหม่ ↗</button></div></div>
 </section>
+
+<!-- v5: iframe ของแอปทั้งหมดอยู่ที่นี่ (pool) -->
+<div id="frames"></div>
 
 <div id="idleModal"><div class="mbox"><div style="font-size:18px;font-weight:700">ไม่มีการใช้งานสักครู่ 💤</div><div class="mm">ระบบจะกลับหน้าโลโก้ใน</div><div class="n" id="idleN">30</div><button class="btn" id="idleStay">ใช้งานต่อ</button></div></div>
 <div id="toast"></div>
@@ -369,11 +397,12 @@ applyTheme(document.documentElement.getAttribute('data-theme')||'dark');
 
 /* ============ 3) จัดการหน้าจอ ============ */
 let state='splash', splashTimer=null;
-function show(id){ document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('on',s.id===id)); state=id; }
+function show(id){ document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('on',s.id===id)); state=id;
+  document.body.classList.toggle('vw',id==='viewer'); if(id==='home'&&window.bgStart) window.bgStart(); }
 
 // idleReturn=true : กลับจากการไม่ใช้งาน → ค้างหน้าโลโก้เป็น Screensaver รอสัมผัส (ไม่เข้าเองซ้ำ)
 function goSplash(idleReturn){
-  clearTimeout(splashTimer); closeViewer(true); hideWarn(); clearTimeout(idleT);
+  clearTimeout(splashTimer); closeViewer(true); clearPool(); hideWarn(); // กลับหน้าโลโก้ = ล้างแอปที่โหลดค้างทั้งหมดเพื่อความปลอดภัยของข้อมูล clearTimeout(idleT);
   show('splash');
   const bar=$('sBar'); bar.classList.remove('run'); void bar.offsetWidth;
   if(idleReturn){ $('sHint').textContent='แตะหน้าจอเพื่อเข้าใช้งาน'; bar.style.visibility='hidden'; }
@@ -382,7 +411,8 @@ function goSplash(idleReturn){
 }
 function enterHome(){ clearTimeout(splashTimer); show('home'); resetIdle();
   $('greet').textContent=greeting(); renderGrid(); // เรนเดอร์ใหม่เพื่อเล่นอนิเมชันการ์ดทุกครั้งที่เข้าหน้าหลัก
-  countUp($('kAll'),APPS.length); countUp($('kCat'),Object.keys(CATS).length); }
+  countUp($('kAll'),APPS.length); countUp($('kCat'),Object.keys(CATS).length);
+  setTimeout(()=>{ if(state==='home') warmTop(); },1200); } // โหลดแอปที่ใช้บ่อยรอไว้ล่วงหน้า
 $('splash').addEventListener('pointerdown',()=>{ if(state==='splash') enterHome(); });
 
 /* ============ 4) การ์ดแอป + ค้นหา ============ */
@@ -413,7 +443,9 @@ function bindCards(){
       const r=c.getBoundingClientRect(), x=(e.clientX-r.left)/r.width-.5, y=(e.clientY-r.top)/r.height-.5;
       c.style.transform=`perspective(700px) rotateY(${x*12}deg) rotateX(${-y*12}deg) translateY(-4px) scale(1.03)`;
     });
-    c.addEventListener('pointerleave',()=>{ c.style.transform=''; });
+    c.addEventListener('pointerleave',()=>{ c.style.transform=''; clearTimeout(c._w); });
+    c.addEventListener('pointerenter',e=>{ if(e.pointerType==='touch') return; clearTimeout(c._w); c._w=setTimeout(()=>warm(+c.dataset.i),120); }); // เมาส์ชี้การ์ด = เริ่มโหลดล่วงหน้า
+    c.addEventListener('pointerdown',()=>warm(+c.dataset.i)); // แตะ/คลิก = เริ่มโหลดทันที (ก่อนอนิเมชันริปเปิลจบ)
     c.addEventListener('click',e=>{
       if(opening) return; opening=true;
       const r=c.getBoundingClientRect(), d=document.createElement('span'); d.className='rip';
@@ -428,21 +460,68 @@ function countUp(el,to){
 }
 function greeting(){ const h=new Date().getHours(); return h<12?'สวัสดีตอนเช้า':h<17?'สวัสดีตอนบ่าย':'สวัสดีตอนเย็น'; }
 
-/* ============ 5) Viewer (เปิดแอปในหน้าเดียว) ============ */
-let curApp=null, loadTimer=null;
-function openApp(i){
-  curApp=APPS[i]; $('vTitle').textContent=curApp.icon+' '+curApp.name;
-  $('vLoad').classList.remove('off'); $('vLoadTxt').textContent='กำลังโหลดระบบ...';
-  $('frame').src=curApp.url; show('viewer'); history.pushState({v:1},''); resetIdle();
+/* ============ 5) Viewer: เปิดแอปเร็วด้วย iframe pool (โหลดล่วงหน้า + เก็บแคชชั่วคราว) ============ */
+// ทำไมต้อง pool: เดิมทุกครั้งที่เปิดแอปต้องโหลดใหม่ทั้งหน้า (รวมดึงข้อมูลจาก Google Sheets) → ช้า
+// ตอนนี้ แอปที่ชี้เมาส์/แตะ หรือใช้บ่อย จะโหลดรอไว้ก่อน และกลับมาเปิดซ้ำได้ทันที
+// แต่ถ้าแอปค้างไว้เกิน STALE_MS จะโหลดใหม่เพื่อให้ข้อมูลไม่เก่า และเมื่อกลับหน้าโลโก้จะล้างทั้งหมด
+const POOL_MAX=4, STALE_MS=5*60*1000, USE_KEY='sbk_usage';
+const pool=new Map(); // index แอป -> {el,url,ready,at,used}
+let curApp=null, curIdx=-1, slowT=null;
+function dropFrame(k){ const f=pool.get(k); if(!f) return; f.el.src='about:blank'; f.el.remove(); pool.delete(k); }
+function clearPool(){ [...pool.keys()].forEach(dropFrame); }
+function evictPool(){
+  while(pool.size>POOL_MAX){ // ทิ้งตัวที่ไม่ได้ใช้นานที่สุด (ยกเว้นแอปที่กำลังเปิดอยู่)
+    let oldK=null, oldT=Infinity;
+    pool.forEach((f,k)=>{ if(k!==curIdx && f.used<oldT){ oldT=f.used; oldK=k; } });
+    if(oldK===null) break; dropFrame(oldK);
+  }
 }
-$('frame').addEventListener('load',()=>{ if($('frame').src!=='about:blank') $('vLoad').classList.add('off'); });
+function getFrame(i){
+  let f=pool.get(i);
+  if(!f){
+    const el=document.createElement('iframe');
+    el.className='appf'; el.title=APPS[i].name; el.allow='camera; microphone; geolocation; clipboard-write; fullscreen';
+    f={el,url:APPS[i].url,ready:false,at:0,used:Date.now()};
+    el.addEventListener('load',()=>{
+      if(el.src==='about:blank'||!pool.has(i)) return;
+      f.ready=true; f.at=Date.now(); el.classList.add('ready');
+      if(curIdx===i){ clearTimeout(slowT); $('vLoad').classList.add('off'); }
+    });
+    $('frames').appendChild(el); el.src=f.url; pool.set(i,f); evictPool();
+  }
+  f.used=Date.now(); return f;
+}
+function warm(i){ // โหลดล่วงหน้า (ข้ามถ้าผู้ใช้เปิดโหมดประหยัดข้อมูล)
+  if(!(i>=0&&i<APPS.length)) return;
+  if(navigator.connection&&navigator.connection.saveData) return;
+  getFrame(i);
+}
+function bumpUse(i){ try{ const u=JSON.parse(localStorage.getItem(USE_KEY)||'{}'); u[APPS[i].name]=(u[APPS[i].name]||0)+1; localStorage.setItem(USE_KEY,JSON.stringify(u)); }catch(e){} }
+function warmTop(){ try{ const u=JSON.parse(localStorage.getItem(USE_KEY)||'{}');
+  APPS.map((a,i)=>[i,u[a.name]||0]).filter(x=>x[1]>0).sort((a,b)=>b[1]-a[1]).slice(0,2).forEach(x=>warm(x[0])); }catch(e){} }
+function markCur(f){ document.querySelectorAll('.appf').forEach(x=>x.classList.toggle('cur',!!f&&x===f.el)); }
+function showLoad(){
+  $('vLoad').classList.remove('off'); $('vLoadTxt').textContent='กำลังโหลดระบบ...'; clearTimeout(slowT);
+  slowT=setTimeout(()=>{ $('vLoadTxt').textContent='ใช้เวลานานกว่าปกติ กรุณาตรวจสอบอินเทอร์เน็ต หรือเปิดในแท็บใหม่'; },8000);
+}
+function reloadFrame(f){ f.ready=false; f.el.classList.remove('ready'); f.el.src=f.url; }
+function openApp(i){
+  curIdx=i; curApp=APPS[i]; $('vTitle').textContent=curApp.icon+' '+curApp.name;
+  $('vLoadIc').textContent=curApp.icon; $('vLoadName').textContent=curApp.name;
+  bumpUse(i);
+  const f=getFrame(i);
+  if(f.ready && Date.now()-f.at>STALE_MS) reloadFrame(f); // แอปค้างนานเกินไป → โหลดข้อมูลใหม่
+  markCur(f);
+  if(f.ready){ clearTimeout(slowT); $('vLoad').classList.add('off'); } else showLoad();
+  show('viewer'); history.pushState({v:1},''); resetIdle();
+}
 function closeViewer(silent){
-  $('frame').src='about:blank'; curApp=null; // เคลียร์หน้าแอปทุกครั้งเพื่อความปลอดภัยของข้อมูล
+  clearTimeout(slowT); curApp=null; curIdx=-1; markCur(null); // ซ่อนแอป แต่ยังเก็บไว้ใน pool เพื่อเปิดซ้ำได้เร็ว
   if(!silent){ show('home'); resetIdle(); }
 }
 $('vBack').onclick=()=>{ if(history.state&&history.state.v) history.back(); else closeViewer(); };
 window.addEventListener('popstate',()=>{ if(state==='viewer') closeViewer(); });
-$('vReload').onclick=()=>{ if(!curApp) return; $('vLoad').classList.remove('off'); $('frame').src=curApp.url; };
+$('vReload').onclick=()=>{ const f=pool.get(curIdx); if(!f) return; showLoad(); reloadFrame(f); };
 const openTab=()=>{ if(curApp) window.open(curApp.url,'_blank','noopener'); };
 $('vOpen').onclick=openTab; $('vLoadOpen').onclick=openTab;
 
@@ -468,7 +547,7 @@ $('idleStay').onclick=()=>{ hideWarn(); resetIdle(); };
     resetIdle();
   },{passive:true,capture:true}));
 // แตะเข้าไปในแอปที่ฝังอยู่ (iframe ต่างโดเมนส่ง event ออกมาไม่ได้) → จับผ่านการเปลี่ยนโฟกัสแทน
-window.addEventListener('blur',()=>{ setTimeout(()=>{ if(document.activeElement===$('frame')){ if(warnOn) hideWarn(); resetIdle(); } },0); });
+window.addEventListener('blur',()=>{ setTimeout(()=>{ if(document.activeElement&&document.activeElement.classList&&document.activeElement.classList.contains('appf')){ if(warnOn) hideWarn(); resetIdle(); } },0); });
 // กลับมาเปิดแอปหลังพักหน้าจอนานเกินกำหนด → กลับหน้าโลโก้
 document.addEventListener('visibilitychange',()=>{
   if(!document.hidden && state!=='splash' && Date.now()-lastActive>CFG.idleMs) goSplash(true);
@@ -505,6 +584,58 @@ function svgToPng(size){
       icons:[{src:i192,sizes:'192x192',type:'image/png',purpose:'any maskable'},{src:i512,sizes:'512x512',type:'image/png',purpose:'any maskable'}]};
     $('manifestLink').href=URL.createObjectURL(new Blob([JSON.stringify(manifest)],{type:'application/manifest+json'}));
   }catch(e){ console.warn('ตั้งค่าไอคอนไม่สำเร็จ',e); }
+})();
+
+/* ============ 7.5) พื้นหลังหน้าแดชบอร์ด: เครือข่ายอนุภาคตอบสนองเมาส์/นิ้ว ============ */
+// ทำงานเฉพาะตอนอยู่หน้าหลักและแท็บมองเห็นอยู่ (ไม่กินแบตตอนเปิดแอป) และเคารพโหมดลดการเคลื่อนไหวของเครื่อง
+(function bgFx(){
+  const cv=$('bgc'); if(!cv||!cv.getContext) return;
+  const ctx=cv.getContext('2d'), reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let W=0,H=0,P=[],raf=0,mx=-999,my=-999,rt=null;
+  const mk=()=>({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.38,vy:(Math.random()-.5)*.38,r:1.3+Math.random()*2.2,h:[190,245,290,25,160][Math.floor(Math.random()*5)]});
+  function size(){
+    const d=Math.min(devicePixelRatio||1,2); W=innerWidth; H=innerHeight;
+    cv.width=Math.round(W*d); cv.height=Math.round(H*d); ctx.setTransform(d,0,0,d,0,0);
+    const n=Math.round(Math.min(72,Math.max(22,W*H/24000))); P=Array.from({length:n},mk);
+    if(reduce||!raf) draw(0);
+  }
+  function draw(move){
+    const light=document.documentElement.getAttribute('data-theme')==='light', link=W<640?95:130;
+    ctx.clearRect(0,0,W,H);
+    for(const p of P){
+      if(move){
+        p.x+=p.vx; p.y+=p.vy;
+        if(p.x<-10)p.x=W+10; else if(p.x>W+10)p.x=-10;
+        if(p.y<-10)p.y=H+10; else if(p.y>H+10)p.y=-10;
+        const dx=p.x-mx, dy=p.y-my, d2=dx*dx+dy*dy; // ผลักอนุภาคเบาๆ เมื่อเมาส์/นิ้วเข้าใกล้
+        if(d2<14400&&d2>1){ const f=(1-Math.sqrt(d2)/120)*.9; p.x+=dx/Math.sqrt(d2)*f; p.y+=dy/Math.sqrt(d2)*f; }
+      }
+    }
+    ctx.lineWidth=1;
+    for(let i=0;i<P.length;i++){
+      const a=P[i];
+      for(let j=i+1;j<P.length;j++){
+        const b=P[j], dx=a.x-b.x, dy=a.y-b.y, d=dx*dx+dy*dy;
+        if(d<link*link){ const k=1-Math.sqrt(d)/link;
+          ctx.strokeStyle=light?`rgba(79,70,229,${k*.28})`:`rgba(165,180,252,${k*.34})`;
+          ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke(); }
+      }
+      const dm=Math.hypot(a.x-mx,a.y-my);
+      if(dm<150){ ctx.strokeStyle=light?`rgba(219,39,119,${(1-dm/150)*.5})`:`rgba(244,114,182,${(1-dm/150)*.6})`;
+        ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(mx,my); ctx.stroke(); }
+      ctx.fillStyle=`hsla(${a.h},${light?75:90}%,${light?50:72}%,${light?.6:.8})`;
+      ctx.beginPath(); ctx.arc(a.x,a.y,a.r,0,6.2832); ctx.fill();
+    }
+  }
+  function loop(){ raf=0; if(state!=='home'||document.hidden) return; draw(1); raf=requestAnimationFrame(loop); }
+  window.bgStart=function(){ if(reduce){ draw(0); return; } if(!raf) raf=requestAnimationFrame(loop); };
+  addEventListener('pointermove',e=>{ mx=e.clientX; my=e.clientY; },{passive:true});
+  addEventListener('pointerleave',()=>{ mx=my=-999; });
+  addEventListener('pointerup',e=>{ if(e.pointerType==='touch') mx=my=-999; },{passive:true});
+  addEventListener('resize',()=>{ clearTimeout(rt); rt=setTimeout(size,200); });
+  document.addEventListener('visibilitychange',()=>{ if(!document.hidden&&state==='home') window.bgStart(); });
+  new MutationObserver(()=>{ if(state==='home'&&reduce) draw(0); }).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
+  size();
 })();
 
 /* ============ 8) เอฟเฟคประกายบนหน้า Splash + เริ่มระบบ ============ */
