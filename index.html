@@ -2,7 +2,7 @@
 <html lang="th">
 <head>
 <meta charset="UTF-8">
-<!-- SBK Parking Center Hub v3 (Responsive + โหมดมืด/สว่าง) : แอปรวมระบบงานลานจอด (Single-file Web App) -->
+<!-- SBK Parking Center Hub v4 (แก้ Viewer จอคอมกว้างเต็มจอ + Responsive + โหมดมืด/สว่าง) : แอปรวมระบบงานลานจอด (Single-file Web App) -->
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="dark light">
 <meta name="format-detection" content="telephone=no">
@@ -179,7 +179,10 @@ html,body{-webkit-text-size-adjust:100%;text-size-adjust:100%;overscroll-behavio
 .top{padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right))}
 .wrap{max-width:1480px;padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right))}
 .vbar{padding-left:max(10px,env(safe-area-inset-left));padding-right:max(10px,env(safe-area-inset-right))}
-#frame{left:env(safe-area-inset-left,0px);right:env(safe-area-inset-right,0px);width:auto}
+/* v4: แก้จอคอมแสดงแอปเป็นแถบแคบ ~300px — iframe เป็น replaced element ถ้า width:auto จะไม่ยืดตาม left/right แต่ใช้ความกว้างมาตรฐาน 300px
+   จึงต้องกำหนดความกว้างจริงเสมอ (มือถือกว้าง ~300-400px เลยดูเหมือนปกติ แต่จอคอมจะเหลือพื้นที่ว่างสีเข้มด้านขวา) */
+#frame{display:block;left:env(safe-area-inset-left,0px);right:env(safe-area-inset-right,0px);width:calc(100% - env(safe-area-inset-left,0px) - env(safe-area-inset-right,0px));max-width:none}
+.load{left:env(safe-area-inset-left,0px);right:env(safe-area-inset-right,0px)}
 #home{-webkit-overflow-scrolling:touch}
 .tools input{font-size:16px;min-height:44px} /* 16px กัน iOS ซูมหน้าจอเองตอนพิมพ์ */
 .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
