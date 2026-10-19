@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <!--
-  SBK Parking Center Hub v7 (Single-file Web App)
+  SBK Parking Center Hub v8 (Single-file Web App)
+  v8:  PC ลดขนาดการ์ด/ส่วนต้อนรับ ให้เห็นทุกแอปในหน้าเดียว
   v7:  เพิ่มแอป Carpark Service Report
   v6: แก้ Logic/Edge cases + Error Handling ครบ, แก้กระพริบตอนเลื่อนบน iOS, รองรับ Safe Area/รอยบากทุกด้าน,
       ไอคอน/Favicon มุมโปร่งใส (ไม่เห็นขอบเหลี่ยมบน PC), ไม่ล็อกหน้าจอทับแอปที่กำลังกรอกข้อมูล,
@@ -261,6 +262,42 @@ body.offline #offline{transform:translate(-50%,0)}
   .logoWrap{width:220px}
 }
 @media(min-width:1500px){.grid{grid-template-columns:repeat(5,minmax(0,1fr));gap:22px}.wrap{max-width:1720px}}
+/* ===== v8: จอ PC ให้เห็นการ์ดทุกแอปในหน้าเดียว (การ์ดเล็กลง ~17% + ส่วนต้อนรับกระชับ) ===== */
+@media(min-width:1024px){
+  .top{padding-top:calc(10px + var(--st));padding-bottom:10px}
+  .top .lg{width:46px;height:46px}.top h1{font-size:20px}.clk b{font-size:22px}
+  .wrap{padding-top:12px;padding-bottom:8px}
+  .hero{padding:14px 24px;border-radius:18px;gap:10px}
+  .hero h2{font-size:22px}.hero p{font-size:13px}
+  .live{margin-top:4px;padding:1px 10px;font-size:11px}
+  .kpi div{padding:6px 18px;font-size:12px;border-radius:12px}.kpi b{font-size:24px}
+  .tools{margin:10px 0 4px}
+  .search input{min-height:40px;padding:8px 40px 8px 14px;font-size:15px;border-radius:12px}
+  .chip{padding:6px 14px;font-size:12.5px}
+  .grid{gap:14px;margin-top:6px}
+  .card{min-height:0;padding:18px;border-radius:18px;gap:4px}
+  .card h3{font-size:16px;margin-top:4px}.card p{font-size:12.5px;line-height:1.45}
+  .ic{width:52px;height:52px;font-size:31px;border-radius:14px}
+  .card::after{width:90px;height:90px;right:-26px;top:-26px}
+  .tag{font-size:10.5px;padding:1px 9px}
+  .foot{margin-top:12px}
+  #home{padding-bottom:calc(16px + var(--sb))}
+}
+/* จอ PC ที่เตี้ย (เช่น แล็ปท็อป) ย่อเพิ่มอีกเพื่อให้ยังเห็นครบในหน้าเดียวมากที่สุด */
+@media(min-width:1024px) and (max-height:900px){
+  .top{padding-top:calc(6px + var(--st));padding-bottom:6px}
+  .top .lg{width:40px;height:40px}.top h1{font-size:18px}.clk b{font-size:20px}
+  .wrap{padding-top:8px}
+  .hero{padding:8px 20px}.hero h2{font-size:19px}.hero p{display:none}.live{margin-top:2px}
+  .kpi div{padding:3px 14px}.kpi b{font-size:20px}
+  .tools{margin:6px 0 2px}.search input{min-height:36px}.chip{padding:4px 12px}
+  .grid{gap:10px;margin-top:4px}
+  .card{padding:12px;gap:3px}
+  .ic{width:38px;height:38px;font-size:23px;border-radius:11px}
+  .card h3{font-size:15px;margin-top:2px}
+  .card p{font-size:12px;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden}
+  .foot{display:none}
+}
 @media(max-height:520px){
   .center{padding-top:calc(10px + var(--st));padding-bottom:calc(10px + var(--sb))}
   .logoWrap{width:min(24vh,110px);margin-bottom:6px}
