@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <!--
-  SBK Parking Center Hub v6 (Single-file Web App)
+  SBK Parking Center Hub v7 (Single-file Web App)
+  v7:  เพิ่มแอป Carpark Service Report
   v6: แก้ Logic/Edge cases + Error Handling ครบ, แก้กระพริบตอนเลื่อนบน iOS, รองรับ Safe Area/รอยบากทุกด้าน,
       ไอคอน/Favicon มุมโปร่งใส (ไม่เห็นขอบเหลี่ยมบน PC), ไม่ล็อกหน้าจอทับแอปที่กำลังกรอกข้อมูล,
       ประวัติย้อนกลับ (Back) ไม่ปนกับหน้าในแอป, ตรวจจับออฟไลน์, ปรับ UI/UX + Responsive ทุกขนาดจอ
@@ -375,7 +376,8 @@ const RAW_APPS = [
   {name:'Shop Vehicle Dashboard',desc:'สรุปข้อมูลรถร้านค้า',url:B1+'SBK-Shop-Vehicle-Dashboard/',icon:'📊',cat:'dash',g:['#06b6d4','#3b82f6']},
   {name:'Staff Vehicle Form',desc:'ฟอร์มบันทึกข้อมูลรถพนักงาน',url:B1+'SBK-Staff-Vehicle-Form/',icon:'🚗',cat:'form',g:['#f97316','#db2777']},
   {name:'Staff Vehicle Dashboard',desc:'สรุปข้อมูลรถพนักงาน',url:B1+'SBK-Staff-Vehicle-Dashboard/',icon:'📈',cat:'dash',g:['#a855f7','#ec4899']},
-  {name:'Car Database Pro',desc:'ฐานข้อมูลรถยนต์ ค้นหาและตรวจสอบ',url:B1+'Car_Dadabase_Pro/',icon:'🗂️',cat:'data',g:['#6366f1','#0ea5e9']}
+  {name:'Car Database Pro',desc:'ฐานข้อมูลรถยนต์ ค้นหาและตรวจสอบ',url:B1+'Car_Dadabase_Pro/',icon:'🗂️',cat:'data',g:['#6366f1','#0ea5e9']},
+  {name:'Carpark Service Report',desc:'สรุปรายงาน Service ช่วยเหลือลูกค้า',url:B1+'Carpark-Service-Report/',icon:'🛎️',cat:'dash',g:['#0d9488','#2563eb']}
 ];
 /* ตรวจข้อมูลแอปก่อนใช้: URL ต้องเป็น https และหมวดต้องมีอยู่จริง (กันพิมพ์ผิดตอนเพิ่มแอปใหม่แล้วการ์ดพัง) */
 const HEX = /^#[0-9a-f]{3,8}$/i;
